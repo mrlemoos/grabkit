@@ -1,0 +1,18 @@
+{
+  "name": "@grabkit/workspace",
+  "version": "1.0.0",
+  "description": "The Grabkit helps you grab data and toss them to the server next chair.",
+  "main": "NONE",
+  "repository": "https://github.com/mrlemoos/grabkit",
+  "author": "Leonardo Lemos <leo.lemos.ds@icloud.com>",
+  "license": "PROPERTY",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "^17.0.35",
+    "lerna": "^4.0.0",
+    "microbundle": "^0.15.0"
+  },
+  "scripts": {
+    "build": "lerna run build"
+  }
+}

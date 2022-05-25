@@ -1,0 +1,13 @@
+{
+  "name": "grabkit",
+  "version": "0.1.0",
+  "description": "The core of grabkit functions.",
+  "main": "dist/index.js",
+  "repository": "https://github.com/mrlemoos/grabkit",
+  "author": "Leonardo Lemos <leo.lemos.ds@icloud.com>",
+  "license": "PROPERTY",
+  "private": false,
+  "scripts": {
+    "build": "microbundle src/index.ts"
+  }
+}
