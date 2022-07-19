@@ -26,6 +26,7 @@
   },
   "scripts": {
     "build": "lerna run build",
-    "test": "jest"
+    "test": "jest",
+    "prepare": "husky install"
   }
 }
