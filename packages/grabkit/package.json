@@ -8,6 +8,6 @@
   "license": "PROPERTY",
   "private": false,
   "scripts": {
-    "build": "microbundle src/index.ts"
+    "build": "rimraf build && rollup -c ../../rollup.config.js"
   }
 }
