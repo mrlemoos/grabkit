@@ -24,8 +24,8 @@
     "ts-jest": "^28.0.7"
   },
   "scripts": {
-    "build": "lerna run build",
+    "build": "npx lerna run build",
     "test": "jest",
-    "prepare": "husky install"
+    "prepare": "npx husky install"
   }
 }
