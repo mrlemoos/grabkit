@@ -1,3 +1,5 @@
+import crossfetch from 'cross-fetch';
+
 import type Endpoint from './Endpoint';
 import type HttpMethod from './HttpMethod';
 import type UrlShape from './UrlShape';
@@ -26,7 +28,7 @@ class Call<Data, Error> {
     const method = sensitiveCaseMethod.trim().toUpperCase();
     let uri = sensitiveCaseURI.trim().toLowerCase();
 
-    if (!uri.startsWith('https://') && !uri.startsWith('http://')) {
+    if (!(uri.startsWith('https://') && uri.startsWith('http://'))) {
       uri = `${baseURL}${uri}`;
     }
 
@@ -50,7 +52,7 @@ class Call<Data, Error> {
     // error that can be thrown by the fetch API, which is a generic type.
     // Forget native Error class.
   }): Promise<[{ data?: Data; error?: Error }, StatusCode]> {
-    const response = await fetch(this.url, {
+    const response = await crossfetch(this.url, {
       method: this.method,
       body: typeof body === 'object' ? JSON.stringify(body) : undefined,
       headers,
@@ -58,7 +60,7 @@ class Call<Data, Error> {
     const json = await response.json();
 
     if (response.ok) {
-      return [{ data: json }, response.status];
+      return [{ data: json, error: undefined }, response.status];
     }
 
     return [{ data: undefined, error: json }, response.status];
@@ -73,8 +75,7 @@ class Call<Data, Error> {
   private validateURI(uri: string): void {
     if (typeof uri !== 'string') {
       throw new Error(
-        'grabkit: Where you call? I think you forgot to pass a URI. \n' +
-          `You should give us a URI like this: call()('GET /users') so we can get your data : ) (if it helps, we've got ${uri})`,
+        `grabkit: Where you call? I think you forgot to pass a URI. \nYou should give us a URI like this: call()('GET /users') so we can get your data :) (if it helps, we've got ${uri})`,
       );
     }
 
@@ -94,8 +95,7 @@ class Call<Data, Error> {
   private validateMethod(method: string): void {
     if (typeof method !== 'string') {
       throw new Error(
-        'grabkit: Where you call? I think you forgot to pass a method. \n' +
-          `You should give us a method like this: call()('GET /users') so we can get your data :P (if it helps, we've got ${method})`,
+        `grabkit: Where you call? I think you forgot to pass a method. \nYou should give us a method like this: call()('GET /users') so we can get your data :P (if it helps, we've got ${method})`,
       );
     }
 
