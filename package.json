@@ -2,10 +2,9 @@
   "name": "@grabkit/workspace",
   "version": "1.0.0",
   "description": "The Grabkit helps you grab data and toss them to the server next chair.",
-  "main": "NONE",
   "repository": "https://github.com/mrlemoos/grabkit",
   "author": "Leonardo Lemos <leo.lemos.ds@icloud.com>",
-  "license": "PROPERTY",
+  "license": "MIT",
   "private": true,
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
