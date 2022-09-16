@@ -35,6 +35,7 @@
   "scripts": {
     "build": "npx lerna run build",
     "test": "jest",
-    "prepare": "npx husky install"
+    "prepare": "npx husky install",
+    "publish": "yarn run build && npx lerna publish"
   }
 }
