@@ -5,3 +5,5 @@ build
 lerna.json
 
 environment.d.ts
+
+jest.config.js
