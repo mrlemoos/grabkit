@@ -8,11 +8,5 @@
   "repository": "https://github.com/mrlemoos/grabkit",
   "author": "Leonardo Lemos <leo.lemos.ds@icloud.com>",
   "license": "PROPERTY",
-  "private": false,
-  "scripts": {
-    "build": "rimraf build && rollup -c ../../rollup.config.js"
-  },
-  "dependencies": {
-    "cross-fetch": "^3.1.5"
-  }
+  "private": false
 }
