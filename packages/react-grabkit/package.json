@@ -1,0 +1,21 @@
+{
+  "name": "react-grabkit",
+  "version": "0.3.0",
+  "description": "The React-hook implementation of grabkit functions.",
+  "main": "build/cjs/react-grabkit.js",
+  "types": "build/types/react-grabkit.d.ts",
+  "module": "build/esm/react-grabkit.js",
+  "repository": "https://github.com/mrlemoos/grabkit",
+  "author": "Leonardo Lemos <leo.lemos.ds@icloud.com>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.25"
+  },
+  "peerDependencies": {
+    "grabkit": "*"
+  }
+}
