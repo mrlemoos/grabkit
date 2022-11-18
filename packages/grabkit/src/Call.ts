@@ -1,11 +1,8 @@
-import crossfetch from 'cross-fetch';
-
 import type Endpoint from './Endpoint';
 import type HttpMethod from './HttpMethod';
 import type UrlShape from './UrlShape';
 import type AnyRecord from './AnyRecord';
 import type StatusCode from './StatusCode';
-
 import methods from './methods';
 
 class Call<Data, Error> {
@@ -52,7 +49,7 @@ class Call<Data, Error> {
     // error that can be thrown by the fetch API, which is a generic type.
     // Forget native Error class.
   }): Promise<[{ data?: Data; error?: Error }, StatusCode]> {
-    const response = await crossfetch(this.url, {
+    const response = await fetch(this.url, {
       method: this.method,
       body: typeof body === 'object' ? JSON.stringify(body) : undefined,
       headers,
@@ -68,7 +65,7 @@ class Call<Data, Error> {
 
   private debugIfTest(): void {
     if (process.env.NODE_ENV === 'test') {
-      console.log(`grabkit: the method was set to be '${this.method}' at '${this.url}'`);
+      console.log(`grabkit: the method has been set to be '${this.method}' at '${this.url}'`);
     }
   }
 
