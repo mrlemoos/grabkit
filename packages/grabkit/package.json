@@ -7,6 +7,6 @@
   "module": "build/esm/grabkit.js",
   "repository": "https://github.com/mrlemoos/grabkit",
   "author": "Leonardo Lemos <leo.lemos.ds@icloud.com>",
-  "license": "PROPERTY",
+  "license": "MIT",
   "private": false
 }
