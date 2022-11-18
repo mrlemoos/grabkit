@@ -1,6 +1,6 @@
 {
   "name": "grabkit",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "The core of grabkit functions.",
   "main": "build/cjs/grabkit.js",
   "types": "build/types/grabkit.d.ts",
