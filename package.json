@@ -36,6 +36,7 @@
     "build": "npx lerna run build",
     "test": "jest",
     "prepare": "npx husky install",
-    "publish": "yarn run build && npx lerna publish"
+    "publish": "yarn run build && npx lerna publish",
+    "bootstrap": "npx lerna link && npx lerna bootstrap"
   }
 }
