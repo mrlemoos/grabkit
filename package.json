@@ -6,6 +6,9 @@
   "author": "Leonardo Lemos <leo.lemos.ds@icloud.com>",
   "license": "MIT",
   "private": true,
+  "engines": {
+    "node": ">=24.0.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
@@ -13,7 +16,7 @@
     "@rollup/plugin-node-resolve": "^14.1.0",
     "@rollup/plugin-typescript": "^8.5.0",
     "@types/jest": "^28.1.6",
-    "@types/node": "^18.7.18",
+    "@types/node": "^24.0.0",
     "@typescript-eslint/eslint-plugin": "^5.30.7",
     "@typescript-eslint/parser": "^5.30.7",
     "eslint": "^8.20.0",
