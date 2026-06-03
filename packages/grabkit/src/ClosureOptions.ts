@@ -1,9 +1,14 @@
+import type Casing from './Casing';
+import type GrabkitFormat from './GrabkitFormat';
 import type AnyRecord from './AnyRecord';
+import type GrabkitFactoryOptions from './GrabkitOptions';
 
-interface ClosureOptions<Body> {
+interface ClosureOptions<Body> extends GrabkitFactoryOptions {
   body?: Body;
+  /** @deprecated Use factory-level headers; per-call headers merge here. */
   headers?: Headers | AnyRecord;
-  log?: (message: any) => void | boolean; // eslint-disable-line @typescript-eslint/no-explicit-any
+  /** @default true — log HTTP errors via `console.error` when no custom logger is set. */
+  log?: (message: string) => void | boolean;
 }
 
 export default ClosureOptions;

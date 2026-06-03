@@ -1,0 +1,81 @@
+# Grabkit
+
+A TypeScript HTTP client library centred on explicit method–path calls and a tuple-shaped response. One published package: `grabkit`. **1.0.0** defaults to JSON:API serialisation; plain JSON APIs opt out with `format: 'json'`.
+
+## Language
+
+**Grabkit**:
+The core npm package (`grabkit`) — a factory that returns a callable for `METHOD /path` requests against an optional base URL.
+_Avoid_: grabkit-core, the SDK, the client (when you mean this package specifically)
+
+**Endpoint**:
+A single string `METHOD path` (e.g. `GET /users/1`) passed to a grab callable. Method is uppercase; path is relative to `baseURL` or an absolute URL.
+_Avoid_: URL alone without method, splitting method and path in the primary API (helpers may come later, but the string is canonical)
+
+**Base URL**:
+Origin passed when creating a grab callable. Prepended to relative paths (`/users`). Ignored when the endpoint path is already an absolute `http://` or `https://` URL.
+_Avoid_: duplicating the host in both base URL and path, assuming base URL is always applied
+
+**JSON:API grab** (default):
+A grab whose request and response bodies follow [JSON:API](https://jsonapi.org/) conventions. Grabkit wraps write bodies into JSON:API envelopes and denormalises read responses into flat resource objects. Non–JSON:API backends use **`format: 'json'`** (plain JSON grab).
+_Avoid_: assuming every API is JSON:API without checking; omitting `format: 'json'` for GitHub-style APIs
+
+**Plain JSON grab**:
+Opt-out via `format: 'json'` at factory or call level. Bodies are plain `JSON.stringify` / `response.json()` with no envelope wrap or relationship denormalisation. Tuple shape and `if (error)` narrowing are unchanged.
+_Avoid_: plain JSON, raw JSON (when you mean this explicit opt-out)
+
+**Denormalised resource**:
+The success **`data`** slot after a JSON:API grab: a single object with **`id`**, **`type`**, attribute keys, and related entities merged under relationship keys (e.g. `favourite_games: [{ id, type, title, … }]`). Collections return an array of denormalised resources.
+_Avoid_: JSON:API document, envelope, `{ data: { type, attributes } }` (when you mean what the caller receives)
+
+**Request body**:
+Optional JSON-serialisable object on a grab. In JSON:API mode the caller passes the same flat shape as **`data`** on read; grabkit wraps it for the wire. **`type` is required** on write — omitting it throws **`GrabkitValidationError`** before the request is sent.
+_Avoid_: FormData, raw string body, file upload (in v1 scope)
+
+**Casing**:
+Optional key normalisation (`snake_case`, `camelCase`, `kebab-case`, `PascalCase`, or `none`). Configured at factory with per-call override. Applies to object **keys only**, never to values (e.g. `type: 'favourite-games'` stays unchanged). Default is **`none`** (passthrough).
+_Avoid_: transforming JSON:API `type` string values; assuming camelCase without setting `casing`
+
+**Grab** (verb):
+To perform an HTTP request and receive back a **`[data, error, meta]`** tuple. Domain language for the library's primary action, not a separate type or class name in code.
+_Avoid_: fetch (when describing what Grabkit does for app developers), call (except where it matches the internal `Call` type)
+
+**Grab result**:
+The resolved outcome of a grab: a tuple **`[data, error, meta]`**. Narrow with **`if (error)`** — a truthy `error` means the grab failed. Successful grabs have **`data`** set and **`error`** is `null`.
+_Avoid_: response object, `{ ok: true }` payload (ADR-0002 shape, superseded), thrown error (for ordinary grab failures)
+
+**Success meta**:
+The third tuple slot on success: **`{ statusCode, meta?, links? }`**. Pass-through of JSON:API top-level **`meta`** and **`links`** when present. **`included`** is consumed into **`data`**, not repeated here.
+_Avoid_: putting `statusCode` only on the error object on success
+
+**Failure meta**:
+On JSON:API HTTP errors: **`{}`**. On transport failures: **`{ statusCode: 0 }`**. Status for HTTP errors lives on **`error.statusCode`**, not in **`meta`**.
+_Avoid_: `{ statusCode }` in meta on HTTP 4xx/5xx JSON:API errors
+
+**Server error** (in a grab result):
+When the HTTP status is not OK, **`error`** is a **`GrabkitError`** — `statusCode`, parsed `body`, derived `message`, and **`errors`** (`JsonApiError[]` from JSON:API error documents). Still returned, not thrown.
+_Avoid_: exception, reject (for 4xx/5xx), bare JSON in `error` without `errors` parsing
+
+**GrabkitError**:
+The error type when the HTTP round-trip completed but the status was not OK. Carries `statusCode`, `body`, `message`, and **`errors`**. Returned in the grab result tuple, not thrown.
+_Avoid_: HttpError, RequestError, ApiError (unless we explicitly rename later)
+
+**GrabkitTransportError**:
+The error type when the grab fails before a normal HTTP result is available — network failure, abort, or response body that cannot be parsed as expected JSON. Also returned in the tuple, not thrown.
+_Avoid_: NetworkError, FetchError, treating transport failures as `GrabkitError`
+
+**GrabkitValidationError**:
+Thrown synchronously before `fetch` when a write body violates JSON:API rules (e.g. missing **`type`**). Not part of the `[data, error, meta]` tuple.
+_Avoid_: returning validation failures as transport errors
+
+**Failed grab**:
+Any grab where **`error`** is truthy — either **`GrabkitError`** or **`GrabkitTransportError`**. Successful grabs have **`data`** set and **`error`** is `null`.
+_Avoid_: rejection, thrown error (Grabkit aims not to reject for HTTP/transport failures)
+
+**React bindings**:
+Out of scope. Grabkit does not ship React hooks or providers; consumers integrate with their own data-fetching layer.
+_Avoid_: react-grabkit, useGrab, GrabkitProvider
+
+**react-grabkit** (package):
+A deprecated npm package; no longer maintained. Existing installs should migrate to `grabkit` and their own React data-fetching patterns.
+_Avoid_: the React integration, hooks package (when you mean this retired package name)

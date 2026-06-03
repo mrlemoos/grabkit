@@ -1,11 +1,35 @@
+import type AnyRecord from './AnyRecord';
 import type Endpoint from './Endpoint';
 import type HttpMethod from './HttpMethod';
+import type ResolvedGrabkitOptions from './GrabkitOptions';
 import type UrlShape from './UrlShape';
-import type AnyRecord from './AnyRecord';
-import type StatusCode from './StatusCode';
+import GrabkitTransportError from './GrabkitTransportError';
+import { serialiseBody } from './jsonApi';
 import methods from './methods';
 
-class Call<Data, Error> {
+const EMPTY_STATUSES = new Set([204, 205, 304]);
+
+interface SendOptions {
+  body?: unknown;
+  headers?: Headers | AnyRecord;
+  resolved: ResolvedGrabkitOptions;
+}
+
+interface FetchOutcome {
+  ok: true;
+  status: number;
+  parsed: unknown;
+  empty: boolean;
+}
+
+interface FetchFailure {
+  ok: false;
+  error: GrabkitTransportError;
+}
+
+type SendOutcome = FetchOutcome | FetchFailure;
+
+class Call {
   private method: HttpMethod;
   private url: UrlShape;
 
@@ -14,20 +38,18 @@ class Call<Data, Error> {
       throw new Error('grabkit: Where you call? I think you forgot to pass an endpoint \\_(-_-)_/.');
     }
 
-    const [sensitiveCaseMethod, sensitiveCaseURI] = String(endpoint).trim().split(' ');
+    const trimmed = String(endpoint).trim();
+    const spaceIndex = trimmed.indexOf(' ');
 
-    if (typeof sensitiveCaseMethod !== 'string') {
+    if (spaceIndex === -1) {
       throw new Error(
         'grabkit: I think you forgot the method in your endpoint. It should be like `GET /users/` for instance.',
       );
     }
 
-    const method = sensitiveCaseMethod.trim().toUpperCase();
-    let uri = sensitiveCaseURI.trim().toLowerCase();
-
-    if (!(uri.startsWith('https://') && uri.startsWith('http://'))) {
-      uri = `${baseURL}${uri}`;
-    }
+    const method = trimmed.slice(0, spaceIndex).trim().toUpperCase();
+    const pathPart = trimmed.slice(spaceIndex + 1).trim();
+    const uri = this.resolveUri(pathPart);
 
     this.validateMethod(method);
     this.validateURI(uri);
@@ -38,29 +60,107 @@ class Call<Data, Error> {
     this.debugIfTest();
   }
 
-  async send<Body>({
-    body,
-    headers,
-  }: {
-    body?: Body;
-    // todo: add headers type to autocomplete work like a charm
-    headers?: Headers | AnyRecord;
-    // When we see Error type notation here, we are referring to the type of the
-    // error that can be thrown by the fetch API, which is a generic type.
-    // Forget native Error class.
-  }): Promise<[{ data?: Data; error?: Error }, StatusCode]> {
-    const response = await fetch(this.url, {
-      method: this.method,
-      body: typeof body === 'object' ? JSON.stringify(body) : undefined,
-      headers,
-    });
-    const json = await response.json();
+  async send({ body, headers, resolved }: SendOptions): Promise<SendOutcome> {
+    const requestBody = this.serialiseRequestBody(body, resolved);
 
-    if (response.ok) {
-      return [{ data: json, error: undefined }, response.status];
+    try {
+      const requestHeaders = this.buildHeaders(resolved, headers, body);
+
+      const response = await fetch(this.url, {
+        method: this.method,
+        body: requestBody,
+        headers: requestHeaders,
+      });
+
+      if (EMPTY_STATUSES.has(response.status)) {
+        return { ok: true, status: response.status, parsed: null, empty: true };
+      }
+
+      const text = await response.text();
+
+      if (text.length === 0) {
+        return {
+          ok: false,
+          error: new GrabkitTransportError('Grabkit: empty response body'),
+        };
+      }
+
+      let parsed: unknown;
+
+      try {
+        parsed = JSON.parse(text);
+      } catch (cause) {
+        return {
+          ok: false,
+          error: new GrabkitTransportError('Grabkit: failed to parse JSON response', cause),
+        };
+      }
+
+      return { ok: true, status: response.status, parsed, empty: false };
+    } catch (cause) {
+      return {
+        ok: false,
+        error: new GrabkitTransportError('Grabkit: network request failed', cause),
+      };
+    }
+  }
+
+  private serialiseRequestBody(body: unknown, resolved: ResolvedGrabkitOptions): string | undefined {
+    if (body === undefined || body === null) {
+      return undefined;
     }
 
-    return [{ data: undefined, error: json }, response.status];
+    if (typeof body !== 'object') {
+      return undefined;
+    }
+
+    if (resolved.format === 'json-api') {
+      return JSON.stringify(serialiseBody(body as Record<string, unknown>, resolved.casing));
+    }
+
+    return JSON.stringify(body);
+  }
+
+  private buildHeaders(
+    resolved: ResolvedGrabkitOptions,
+    callHeaders: Headers | AnyRecord | undefined,
+    body: unknown,
+  ): Headers {
+    const headers = new Headers(resolved.headers as HeadersInit | undefined);
+
+    if (callHeaders) {
+      const entries =
+        callHeaders instanceof Headers ? callHeaders.entries() : Object.entries(callHeaders as AnyRecord);
+
+      for (const [key, value] of entries) {
+        headers.set(key, String(value));
+      }
+    }
+
+    const hasBody = body !== undefined && body !== null;
+
+    if (resolved.format === 'json-api' && resolved.jsonApiHeaders) {
+      if (!headers.has('Accept')) {
+        headers.set('Accept', 'application/vnd.api+json');
+      }
+
+      if (hasBody && !headers.has('Content-Type')) {
+        headers.set('Content-Type', 'application/vnd.api+json');
+      }
+    } else if (resolved.format === 'json' && hasBody && !headers.has('Content-Type')) {
+      headers.set('Content-Type', 'application/json');
+    }
+
+    return headers;
+  }
+
+  private resolveUri(pathPart: string): string {
+    if (pathPart.startsWith('http://') || pathPart.startsWith('https://')) {
+      return pathPart;
+    }
+
+    const relative = pathPart.startsWith('/') ? pathPart : `/${pathPart}`;
+    return `${this.baseURL ?? ''}${relative}`;
   }
 
   private debugIfTest(): void {
@@ -103,3 +203,5 @@ class Call<Data, Error> {
 }
 
 export default Call;
+
+export type { SendOutcome };
