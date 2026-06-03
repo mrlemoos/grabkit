@@ -1,2 +1,5 @@
 node_modules
 build
+.nx/polygraph
+.claude/worktrees
+.claude/settings.local.json
