@@ -2,6 +2,6 @@
   "$schema": "https://json.schemastore.org/huskyrc.json",
   "hooks": {
     "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-    "pre-commit": "yarn run lint-staged"
+    "pre-commit": "pnpm exec lint-staged"
   }
 }

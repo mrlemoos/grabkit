@@ -1,9 +1,13 @@
 import commonjs from '@rollup/plugin-commonjs';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import { createRequire } from 'node:module';
 import dts from 'rollup-plugin-dts';
 import external from 'rollup-plugin-peer-deps-external';
 import { terser } from 'rollup-plugin-terser';
+
+const require = createRequire(import.meta.url);
+const tslibPath = require.resolve('tslib');
 
 const projectRoot = 'packages/grabkit';
 const ESM_FILENAME = `${projectRoot}/build/esm/grabkit.js`;
@@ -31,7 +35,7 @@ export default () => [
       external({ includeDependencies: [] }),
       resolve(),
       commonjs(),
-      typescript({ tsconfig: `${projectRoot}/tsconfig.lib.json` }),
+      typescript({ tsconfig: `${projectRoot}/tsconfig.lib.json`, tslib: tslibPath }),
       terser(),
     ],
   },

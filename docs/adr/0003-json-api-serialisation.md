@@ -113,5 +113,5 @@ Set **`jsonApiHeaders: false`** to opt out. Caller-supplied headers **override**
 - **ADR-0002** tuple and `GrabPayload` union are historical; implementation and tests target this ADR.
 - **`CONTEXT.md`** must be updated with JSON:API grab, denormalised resource, `[data, error, meta]`, casing, and format opt-out vocabulary.
 - New types/errors: `JsonApiError`, `GrabkitValidationError`, `SuccessMeta`, casing and format option types.
-- Implementation lives in `packages/grabkit/src` with **Vitest** tests beside source (`yarn test`).
+- Implementation lives in `packages/grabkit/src` with **Vitest** tests beside source (`pnpm test`).
 - A casing transform utility (or small dependency) is required for the four supported key conventions.
