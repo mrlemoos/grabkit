@@ -90,4 +90,12 @@ export const globalSeoHead = [
 		attrs: { type: 'application/ld+json' },
 		content: JSON.stringify(webSite),
 	},
+	{
+		tag: 'script' as const,
+		attrs: {
+			defer: true,
+			src: 'https://cloud.umami.is/script.js',
+			'data-website-id': '989481bc-3a85-4fd9-bb86-a22c158b7124',
+		},
+	},
 ];
