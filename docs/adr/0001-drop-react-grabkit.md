@@ -6,10 +6,10 @@ The `react-grabkit` npm package is deprecated with the message *"No longer maint
 
 ## Considered options
 
-- **Keep react-grabkit** — rejected; splits maintenance and blurs product focus.
-- **Silent stop publishing** — rejected; leaves npm consumers unsure whether the package is abandoned.
-- **Unpublish** — rejected; breaks lockfiles and is irreversible in practice.
-- **Deprecation message with migration link** — rejected; minimal message only (`C`).
+- **Keep react-grabkit**: rejected; splits maintenance and blurs product focus.
+- **Silent stop publishing**: rejected; leaves npm consumers unsure whether the package is abandoned.
+- **Unpublish**: rejected; breaks lockfiles and is irreversible in practice.
+- **Deprecation message with migration link**: rejected; minimal message only (`C`).
 
 ## Consequences
 

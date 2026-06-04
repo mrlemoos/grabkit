@@ -1,0 +1,47 @@
+---
+description: Avoid em dashes in prose; use commas, colons, or semicolons instead
+alwaysApply: true
+---
+
+# No em dashes in prose
+
+Do not use the em dash character (`—`, U+2014) in user-facing copy: README, docs, ADRs, `CONTEXT.md`, changelogs, JSDoc, comments, or UI strings.
+
+When editing existing text, replace em dashes with punctuation that fits the sentence.
+
+## Choose punctuation by role
+
+| Role | Use | Example |
+|------|-----|---------|
+| Term → definition | Colon | `` `statusCode`: HTTP status `` |
+| Version or label → detail | Colon | `` **1.0.0**: JSON:API is the default `` |
+| Rejected option (ADRs) | Colon | `` **Keep Lerna**: rejected; … `` |
+| Two related independent clauses | Semicolon | `` JSON:API by default; use plain JSON `` |
+| Brief aside or contrast | Comma | `` error is truthy, either GrabkitError or … `` |
+| Empty table cell | `(none)` or a word | Not an em dash placeholder |
+
+En dashes (`–`, U+2013) are fine in compounds (`method–path`, `non–JSON:API`).
+
+## Examples
+
+```markdown
+<!-- BAD -->
+JSON:API by default — plain JSON with `format: 'json'`.
+Narrow with `if (error)` — a truthy `error` means failure.
+- `body` — parsed response body
+
+<!-- GOOD -->
+JSON:API by default; use plain JSON with `format: 'json'`.
+Narrow with `if (error)`; a truthy `error` means failure.
+- `body`: parsed response body
+```
+
+```typescript
+// BAD
+/** @default 'none' — passthrough; set explicitly … */
+
+// GOOD
+/** @default 'none'. Passthrough; set explicitly … */
+```
+
+Do not change em dashes inside third-party or vendored paths (e.g. `.opencode/`, `.cursor/agents/`) unless the user asks.

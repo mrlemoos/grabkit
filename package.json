@@ -39,6 +39,8 @@
   },
   "scripts": {
     "build": "nx run grabkit:build",
+    "docs:build": "nx run @grabkit/docs:build",
+    "dev": "nx run @grabkit/docs:dev",
     "test": "nx run grabkit:test",
     "test:integration": "nx run grabkit-integration:test",
     "test:watch": "nx run grabkit:test --watch",

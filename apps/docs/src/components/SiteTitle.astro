@@ -1,0 +1,32 @@
+---
+const href = Astro.site?.toString() ?? '/';
+---
+
+<a href={href} class="site-title">
+  <img src="/favicon.svg" width="26" height="26" alt="" class="mark" />
+  <span class="wordmark"><span class="accent">Grab</span>kit</span>
+</a>
+
+<style>
+  a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    color: var(--sl-color-white);
+    font-family: var(--gk-font-heading, 'Instrument Serif', Georgia, serif);
+    font-size: var(--sl-text-lg);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+  }
+  .mark {
+    flex-shrink: 0;
+    display: block;
+  }
+  .wordmark {
+    line-height: 1;
+  }
+  .accent {
+    color: var(--gk-accent, #5ee4a8);
+  }
+</style>

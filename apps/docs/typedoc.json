@@ -1,0 +1,15 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": ["../../packages/grabkit/src/index.ts"],
+  "tsconfig": "../../packages/grabkit/tsconfig.lib.json",
+  "out": "src/content/docs/reference",
+  "plugin": ["typedoc-plugin-markdown"],
+  "readme": "none",
+  "indexFormat": "table",
+  "entryFileName": "index",
+  "hidePageHeader": true,
+  "hideBreadcrumbs": true,
+  "useHTMLAnchors": false,
+  "fileExtension": ".md",
+  "formatWithPrettier": false
+}

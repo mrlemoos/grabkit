@@ -1,0 +1,31 @@
+{
+  "name": "@grabkit/docs",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "pnpm run sync && astro dev",
+    "build": "pnpm run sync && astro build",
+    "preview": "astro preview",
+    "sync": "node scripts/sync-content.mjs",
+    "api:generate": "typedoc"
+  },
+  "dependencies": {
+    "@astrojs/react": "^5.0.7",
+    "@astrojs/starlight": "^0.39.3",
+    "@fontsource/geist-mono": "^5.2.8",
+    "@fontsource/geist-sans": "^5.2.5",
+    "@types/react": "^19.2.16",
+    "@types/react-dom": "^19.2.3",
+    "astro": "^6.3.1",
+    "motion": "^12.40.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "sharp": "^0.34.5",
+    "three": "^0.183.0"
+  },
+  "devDependencies": {
+    "typedoc": "^0.28.0",
+    "typedoc-plugin-markdown": "^4.6.0"
+  }
+}

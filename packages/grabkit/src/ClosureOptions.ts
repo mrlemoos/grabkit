@@ -7,7 +7,7 @@ interface ClosureOptions<Body> extends GrabkitFactoryOptions {
   body?: Body;
   /** @deprecated Use factory-level headers; per-call headers merge here. */
   headers?: Headers | AnyRecord;
-  /** @default true — log HTTP errors via `console.error` when no custom logger is set. */
+  /** @default true. Log HTTP errors via `console.error` when no custom logger is set. */
   log?: (message: string) => void | boolean;
 }
 

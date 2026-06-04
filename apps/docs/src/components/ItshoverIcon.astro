@@ -1,0 +1,23 @@
+---
+import ItshoverIconReact from './ItshoverIcon';
+
+interface Props {
+  name: string;
+  size?: number;
+  class?: string;
+}
+
+const { name, size = 24, class: className } = Astro.props;
+---
+
+<ItshoverIconReact client:visible name={name} size={size} className={className ?? ''} />
+
+<style>
+  .itshover-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 0;
+  }
+</style>

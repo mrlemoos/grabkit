@@ -1,0 +1,50 @@
+---
+title: Grabkit
+description: TypeScript HTTP client for explicit METHOD /path calls.
+template: splash
+hero:
+  tagline: Grab data with METHOD /path. Tuple results. JSON:API by default; plain JSON when you opt out.
+  actions:
+    - text: Get started
+      link: /guides/getting-started/
+      icon: right-arrow
+    - text: View on GitHub
+      link: https://github.com/mrlemoos/grabkit
+      icon: external
+      variant: minimal
+---
+
+import FeatureCard from '../../components/FeatureCard.astro';
+import FeatureCardGrid from '../../components/FeatureCardGrid.astro';
+
+## Why Grabkit?
+
+<FeatureCardGrid stagger>
+  <FeatureCard title="Explicit endpoints" icon="document">
+    Every request is `GET /users/1`: method and path in one string, relative to an optional base URL.
+  </FeatureCard>
+  <FeatureCard title="Tuple results" icon="setting">
+    `const [data, error, meta] = await grab(...)`. Narrow with `if (error)`; failures are returned, not thrown.
+  </FeatureCard>
+  <FeatureCard title="JSON:API built in" icon="open-book">
+    Denormalised `data`, relationship merging, and write envelopes. Use `format: 'json'` for GitHub-style APIs.
+  </FeatureCard>
+</FeatureCardGrid>
+
+```bash
+pnpm add grabkit
+```
+
+```typescript
+import grabkit from 'grabkit';
+
+const grab = grabkit('https://api.example.com', { casing: 'camelCase' });
+const [data, error, meta] = await grab('GET /users/1');
+
+if (error) {
+  console.error(error.message, error.statusCode);
+  return;
+}
+
+console.log(data.name, meta.statusCode);
+```

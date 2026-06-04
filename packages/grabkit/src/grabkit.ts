@@ -30,7 +30,7 @@ function grabkit(baseURL?: string, factoryOptions?: GrabkitFactoryOptions) {
   /**
    * Perform a grab against `endpoint`.
    *
-   * Returns `[data, error, meta]`. Narrow with `if (error)` — a truthy `error` means the grab failed.
+   * Returns `[data, error, meta]`. Narrow with `if (error)`; a truthy `error` means the grab failed.
    *
    * @param endpoint - `METHOD path`, e.g. `GET /users/1`.
    * @param options - Per-call body, headers, and serialisation overrides.

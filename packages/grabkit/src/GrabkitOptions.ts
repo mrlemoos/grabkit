@@ -6,7 +6,7 @@ import type AnyRecord from './AnyRecord';
 interface GrabkitFactoryOptions {
   /** @default 'json-api' */
   format?: GrabkitFormat;
-  /** @default 'none' — passthrough; set explicitly for your API's key convention. */
+  /** @default 'none'. Passthrough; set explicitly for your API's key convention. */
   casing?: Casing;
   /** @default true in JSON:API mode; ignored when `format` is `'json'`. */
   jsonApiHeaders?: boolean;

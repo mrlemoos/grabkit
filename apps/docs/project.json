@@ -1,0 +1,32 @@
+{
+  "name": "@grabkit/docs",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "apps/docs/src",
+  "tags": [
+    "scope:docs",
+    "type:app"
+  ],
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        "grabkit:build"
+      ],
+      "outputs": [
+        "{projectRoot}/dist"
+      ],
+      "options": {
+        "cwd": "apps/docs",
+        "command": "pnpm run build"
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "apps/docs",
+        "command": "pnpm run dev"
+      }
+    }
+  }
+}

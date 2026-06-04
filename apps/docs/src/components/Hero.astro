@@ -1,0 +1,135 @@
+---
+import DraftContentNotice from 'virtual:starlight/components/DraftContentNotice';
+import GrabHeroCanvas from './GrabHeroCanvas.astro';
+import ItshoverIcon from './ItshoverIcon.astro';
+
+const PAGE_TITLE_ID = '_top';
+
+const { data } = Astro.locals.starlightRoute.entry;
+const { title = data.title, tagline, actions = [] } = data.hero || {};
+/** Starlight root index uses an empty slug, not the string "index". */
+const showGrabScene = data.template === 'splash' && Boolean(data.hero);
+---
+
+<div class:list={['hero', 'hero--grabkit', showGrabScene && 'hero--with-scene']}>
+  {
+    showGrabScene && (
+      <div class="hero__scene">
+        <GrabHeroCanvas />
+      </div>
+    )
+  }
+  <div class="stack">
+    <div class="copy">
+      <h1 id={PAGE_TITLE_ID} set:html={title} />
+      {data.draft && <DraftContentNotice />}
+      {tagline && <p class="tagline" set:html={tagline} />}
+    </div>
+    {
+      actions.length > 0 && (
+        <div class="actions">
+          {actions.map(
+            ({ attrs: { class: className, ...attrs } = {}, icon, link: href, text, variant }) => (
+              <a href={href} class:list={['sl-link-button', variant ?? 'primary', className]} {...attrs}>
+                {icon?.type === 'icon' && <ItshoverIcon name={icon.name} size={18} />}
+                {text}
+                {icon?.type === 'raw' && <Fragment set:html={icon.html} />}
+              </a>
+            ),
+          )}
+        </div>
+      )
+    }
+  </div>
+</div>
+
+<style>
+  @layer starlight.core {
+    .hero--grabkit {
+      display: grid;
+      grid-template-columns: 100%;
+      align-items: center;
+      gap: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .hero--grabkit .stack {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.5rem, calc(1.5rem + 1vw), 2rem);
+      text-align: center;
+    }
+
+    .hero--grabkit .copy {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      align-items: center;
+    }
+
+    .hero--grabkit .actions {
+      display: flex;
+    }
+
+    .hero--grabkit .copy > * {
+      max-width: 50ch;
+    }
+
+    .hero--grabkit h1 {
+      font-family: var(--gk-font-heading, 'Instrument Serif', Georgia, serif);
+      font-size: clamp(var(--sl-text-3xl), calc(0.25rem + 5vw), var(--sl-text-6xl));
+      line-height: var(--sl-line-height-headings);
+      font-weight: 400;
+      color: var(--sl-color-white);
+    }
+
+    .hero--grabkit .tagline {
+      font-size: clamp(var(--sl-text-base), calc(0.0625rem + 2vw), var(--sl-text-xl));
+      color: var(--sl-color-gray-2);
+    }
+
+    .hero--grabkit .actions {
+      gap: 1rem 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .hero--grabkit .sl-link-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+
+    .hero__scene {
+      width: 100%;
+      margin-inline: auto;
+      overflow: visible;
+    }
+
+    @media (min-width: 50rem) {
+      .hero--with-scene {
+        grid-template-columns: 7fr 4fr;
+        gap: 3%;
+        padding-block: clamp(2.5rem, calc(1rem + 10vmin), 10rem);
+      }
+
+      .hero--with-scene .hero__scene {
+        order: 2;
+        max-width: none;
+        margin-inline: 0;
+      }
+
+      .hero--with-scene .stack {
+        text-align: start;
+      }
+
+      .hero--with-scene .copy {
+        align-items: flex-start;
+      }
+
+      .hero--with-scene .actions {
+        justify-content: flex-start;
+      }
+    }
+  }
+</style>
