@@ -15,4 +15,4 @@ The build depends on `grabkit:build` via Nx. TypeDoc output and the changelog pa
 
 ## Deploy
 
-Production deploys from **`main`** to Vercel with the root `vercel.json`. Point **grabkit.dev** at the Vercel project in the dashboard.
+Production deploys from **`main`** to Vercel. Set the project **Root Directory** to `apps/docs` (uses `apps/docs/vercel.json`) or leave it at the repo root (uses root `vercel.json`). Both run `pnpm -w docs:build` so the Nx workspace script resolves correctly. Point **grabkit.dev** at the Vercel project in the dashboard.
