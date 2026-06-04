@@ -18,4 +18,4 @@ Grabkit resolves every grab to a tuple `[payload, statusCode]` instead of mixing
 
 - **Breaking change** from 0.3.x: consumers must migrate destructuring and error handling; shipped as **`1.0.0`** (first stable public contract).
 - Implementation must fix absolute-URL handling when combining `baseURL` with full `http(s)://` paths (current code incorrectly prefixes in some cases).
-- Tests become necessary to lock payload shapes and transport vs HTTP paths. **Vitest** is used at the repo root (`yarn test`); tests live beside `packages/grabkit/src`.
+- Tests become necessary to lock payload shapes and transport vs HTTP paths. **Vitest** is used at the repo root (`pnpm test`); tests live beside `packages/grabkit/src`.
