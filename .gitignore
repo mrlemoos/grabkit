@@ -1,5 +1,12 @@
 node_modules
 build
+dist
+coverage
 .nx/polygraph
 .claude/worktrees
 .claude/settings.local.json
+
+
+.nx/cache
+.nx/workspace-data
+vitest.config.*.timestamp*

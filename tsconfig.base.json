@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "noImplicitAny": true,
+    "preserveConstEnums": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "paths": {
+      "grabkit": ["packages/grabkit/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

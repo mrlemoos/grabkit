@@ -6,12 +6,17 @@
   "author": "Leonardo Lemos <leo.lemos.ds@icloud.com>",
   "license": "MIT",
   "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "engines": {
     "node": ">=24.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.0.3",
     "@commitlint/config-conventional": "^17.0.3",
+    "@nx/rollup": "22.7.5",
+    "@nx/vitest": "22.7.5",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^14.1.0",
     "@rollup/plugin-typescript": "^8.5.0",
@@ -20,25 +25,26 @@
     "@typescript-eslint/parser": "^5.30.7",
     "eslint": "^8.20.0",
     "husky": "^8.0.1",
-    "vitest": "^3.2.4",
     "jshint": "^2.13.5",
-    "lerna": "^4.0.0",
     "lint-staged": "^13.0.3",
-    "microbundle": "^0.15.0",
+    "nx": "22.7.5",
     "prettier": "^2.7.1",
     "rimraf": "^3.0.2",
     "rollup": "^2.79.0",
     "rollup-plugin-dts": "^4.2.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-terser": "^7.0.2",
-    "typescript": "^4.8.3"
+    "typescript": "^4.8.3",
+    "vite": "^8.0.0",
+    "vitest": "^3.2.4"
   },
   "scripts": {
-    "build": "npx lerna run build",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "prepare": "npx husky install",
-    "publish": "yarn run build && npx lerna publish",
-    "bootstrap": "npx lerna link && npx lerna bootstrap"
-  }
+    "build": "nx run grabkit:build",
+    "test": "nx run grabkit:test",
+    "test:integration": "nx run grabkit-integration:test",
+    "test:watch": "nx run grabkit:test --watch",
+    "release": "nx release",
+    "prepare": "npx husky install"
+  },
+  "dependencies": {}
 }

@@ -5,15 +5,14 @@ import dts from 'rollup-plugin-dts';
 import external from 'rollup-plugin-peer-deps-external';
 import { terser } from 'rollup-plugin-terser';
 
-const ESM_FILENAME = 'build/esm/grabkit.js';
-const CJS_FILENAME = 'build/cjs/grabkit.js';
-const TYPES_FILENAME = 'build/types/grabkit.d.ts';
+const projectRoot = 'packages/grabkit';
+const ESM_FILENAME = `${projectRoot}/build/esm/grabkit.js`;
+const CJS_FILENAME = `${projectRoot}/build/cjs/grabkit.js`;
+const TYPES_FILENAME = `${projectRoot}/build/types/grabkit.d.ts`;
 
-const TSCONFIG_FILENAME = '../../tsconfig.json';
-
-export default [
+export default () => [
   {
-    input: 'src/index.ts',
+    input: `${projectRoot}/src/index.ts`,
     output: [
       {
         file: CJS_FILENAME,
@@ -32,12 +31,12 @@ export default [
       external({ includeDependencies: [] }),
       resolve(),
       commonjs(),
-      typescript({ tsconfig: TSCONFIG_FILENAME }),
+      typescript({ tsconfig: `${projectRoot}/tsconfig.lib.json` }),
       terser(),
     ],
   },
   {
-    input: 'src/index.ts',
+    input: `${projectRoot}/src/index.ts`,
     output: [{ file: TYPES_FILENAME, format: 'esm' }],
     plugins: [dts()],
   },

@@ -1,0 +1,16 @@
+{
+  "name": "grabkit-integration",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "__tests__",
+  "projectType": "application",
+  "tags": ["scope:grabkit", "type:integration"],
+  "targets": {
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/__tests__"],
+      "options": {
+        "config": "__tests__/vitest.config.ts"
+      }
+    }
+  }
+}

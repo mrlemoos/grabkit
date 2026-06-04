@@ -1,0 +1,29 @@
+{
+  "name": "grabkit",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "src",
+  "projectType": "library",
+  "tags": ["scope:grabkit", "type:lib", "publishable"],
+  "targets": {
+    "build": {
+      "executor": "@nx/rollup:rollup",
+      "outputs": ["{projectRoot}/build"],
+      "options": {
+        "project": "packages/grabkit/package.json",
+        "main": "packages/grabkit/src/index.ts",
+        "outputPath": "packages/grabkit/build",
+        "tsConfig": "packages/grabkit/tsconfig.lib.json",
+        "rollupConfig": "packages/grabkit/rollup.config.js",
+        "format": ["esm", "cjs"],
+        "compiler": "tsc"
+      }
+    },
+    "test": {
+      "executor": "@nx/vitest:test",
+      "outputs": ["{workspaceRoot}/coverage/packages/grabkit"],
+      "options": {
+        "config": "packages/grabkit/vitest.config.ts"
+      }
+    }
+  }
+}

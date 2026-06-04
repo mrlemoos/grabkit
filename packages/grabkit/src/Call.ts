@@ -129,11 +129,14 @@ class Call {
     const headers = new Headers(resolved.headers as HeadersInit | undefined);
 
     if (callHeaders) {
-      const entries =
-        callHeaders instanceof Headers ? callHeaders.entries() : Object.entries(callHeaders as AnyRecord);
-
-      for (const [key, value] of entries) {
-        headers.set(key, String(value));
+      if (callHeaders instanceof Headers) {
+        callHeaders.forEach((value, key) => {
+          headers.set(key, value);
+        });
+      } else {
+        for (const [key, value] of Object.entries(callHeaders as AnyRecord)) {
+          headers.set(key, String(value));
+        }
       }
     }
 

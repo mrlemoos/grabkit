@@ -47,7 +47,7 @@ function grabkit(baseURL?: string, factoryOptions?: GrabkitFactoryOptions) {
       resolved,
     });
 
-    if (!outcome.ok) {
+    if (outcome.ok === false) {
       return [null, outcome.error, TRANSPORT_META];
     }
 

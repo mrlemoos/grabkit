@@ -1,18 +1,12 @@
 {
-  "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "es6",
-    "moduleResolution": "node",
-    "noImplicitAny": true,
-    "outDir": "./dist",
-    "preserveConstEnums": true,
-    "esModuleInterop": true,
-    "target": "es5",
-    "allowSyntheticDefaultImports": true,
-  },
-  "exclude": [
-    "node_modules"
-  ],
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "references": [
+    {
+      "path": "./packages/grabkit"
+    },
+    {
+      "path": "./__tests__"
+    }
+  ]
 }
