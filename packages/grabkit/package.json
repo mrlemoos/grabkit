@@ -8,5 +8,6 @@
   "repository": "https://github.com/mrlemoos/grabkit",
   "author": "Leonardo Lemos <leo.lemos.ds@icloud.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "files": ["build"]
 }
