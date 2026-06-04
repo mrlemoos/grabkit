@@ -5,7 +5,7 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "pnpm run sync && astro dev",
-    "build": "pnpm run sync && astro build",
+    "build": "pnpm run sync && node scripts/generate-og.mjs && astro build",
     "preview": "astro preview",
     "sync": "node scripts/sync-content.mjs",
     "api:generate": "typedoc"

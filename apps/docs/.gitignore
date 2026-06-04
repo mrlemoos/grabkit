@@ -1,5 +1,6 @@
 # build output
 dist/
+public/og.png
 
 # generated docs (typedoc + changelog sync)
 src/content/docs/reference/

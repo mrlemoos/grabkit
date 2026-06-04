@@ -3,14 +3,14 @@ import { defineConfig } from 'astro/config';
 import starlight from '@astrojs/starlight';
 
 import react from '@astrojs/react';
+import { globalSeoHead, SITE_DESCRIPTION, SITE_URL } from './src/seo.ts';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://grabkit.dev',
+  site: SITE_URL,
   integrations: [starlight({
     title: 'Grabkit',
-    description:
-      'TypeScript HTTP client for explicit METHOD /path calls. JSON:API by default; plain JSON with format: "json".',
+    description: SITE_DESCRIPTION,
     logo: {
       src: './src/assets/logo.svg',
       alt: 'Grabkit',
@@ -38,6 +38,7 @@ export default defineConfig({
       },
     ],
     head: [
+      ...globalSeoHead,
       {
         tag: 'link',
         attrs: {
