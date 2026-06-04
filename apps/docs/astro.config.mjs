@@ -81,6 +81,9 @@ export default defineConfig({
             label: 'Migrating from react-grabkit',
             slug: 'guides/migrating-from-react-grabkit',
           },
+          { label: 'TanStack Query', slug: 'guides/tanstack-query' },
+          { label: 'SWR', slug: 'guides/swr' },
+          { label: 'Node.js', slug: 'guides/node' },
         ],
       },
       {

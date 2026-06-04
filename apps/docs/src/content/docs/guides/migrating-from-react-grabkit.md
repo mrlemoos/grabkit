@@ -39,23 +39,13 @@ async function fetchUser(id: string) {
 
 Whether you throw after a failed grab is up to your data layer; Grabkit itself returns errors in the tuple.
 
-## React Query example
+## Data layer examples
 
-```typescript
-import { useQuery } from '@tanstack/react-query';
-import { grab } from './api';
+Full walkthroughs:
 
-function useUser(id: string) {
-  return useQuery({
-    queryKey: ['user', id],
-    queryFn: async () => {
-      const [data, error] = await grab(`GET /users/${id}`);
-      if (error) throw error;
-      return data;
-    },
-  });
-}
-```
+- [TanStack Query](/guides/tanstack-query/)
+- [SWR](/guides/swr/)
+- [Node.js](/guides/node/) (server-side)
 
 ## Version 1.0 defaults
 

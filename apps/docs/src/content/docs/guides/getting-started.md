@@ -51,3 +51,5 @@ Ordinary HTTP and transport failures are **returned**, not thrown. The only sync
 - [Plain JSON](/guides/plain-json/): `format: 'json'` for non–JSON:API APIs
 - [Configuration](/guides/configuration/): casing, headers, per-call overrides
 - [Errors & results](/guides/errors/): `GrabkitError`, transport errors, and `meta`
+- [TanStack Query](/guides/tanstack-query/), [SWR](/guides/swr/): client cache libraries
+- [Node.js](/guides/node/): route handlers and server-side grabs
