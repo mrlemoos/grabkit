@@ -3,7 +3,7 @@ title: TanStack Query
 description: Use Grabkit with TanStack Query (React Query) for reads, mutations, and cache keys.
 ---
 
-Grabkit returns `[data, error, meta]`; TanStack Query expects **`queryFn`** and **`mutationFn`** to **throw** on failure so the library can set `isError`, `error`, and retry behaviour. Convert tuple errors inside those functions.
+Grabkit returns `[data, error, meta]`; TanStack Query expects **`queryFn`** and **`mutationFn`** to **throw** on failure so the library can set `isError`, `error`, and retry behaviour. Use **`orThrow`** from the package inside those functions.
 
 ## Shared API client
 
@@ -11,7 +11,7 @@ Create one grab callable per API origin (same pattern as [Getting started](/guid
 
 ```typescript
 // api.ts
-import grabkit from 'grabkit';
+import grabkit, { orThrow } from 'grabkit';
 
 export const grab = grabkit(process.env.NEXT_PUBLIC_API_URL!, {
   casing: 'camelCase',
@@ -20,29 +20,24 @@ export const grab = grabkit(process.env.NEXT_PUBLIC_API_URL!, {
   },
 });
 
-/** Throw on failed grab so TanStack Query treats the request as failed. */
-export async function grabOrThrow<Data>(
-  endpoint: string,
-  options?: Parameters<typeof grab>[1],
-): Promise<Data> {
-  const [data, error] = await grab(endpoint, options);
-  if (error) throw error;
-  return data as Data;
-}
+export { orThrow };
 ```
 
 ## Reads with `useQuery`
 
 ```typescript
 import { useQuery } from '@tanstack/react-query';
-import { grabOrThrow } from './api';
+import { grab, orThrow } from './api';
 
 type User = { id: string; name: string };
 
 function useUser(id: string) {
   return useQuery({
     queryKey: ['user', id],
-    queryFn: () => grabOrThrow<User>(`GET /users/${id}`),
+    queryFn: async () => {
+      const [data] = await orThrow(grab<User>(`GET /users/${id}`));
+      return data;
+    },
     enabled: Boolean(id),
   });
 }
@@ -63,14 +58,16 @@ function Profile({ id }: { id: string }) {
 
 ```typescript
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { grabOrThrow } from './api';
+import { grab, orThrow } from './api';
 
 function useCreateUser() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (body: { type: 'users'; name: string }) =>
-      grabOrThrow(`POST /users`, { body }),
+    mutationFn: async (body: { type: 'users'; name: string }) => {
+      const [data] = await orThrow(grab(`POST /users`, { body }));
+      return data;
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
     },
@@ -90,7 +87,7 @@ export const grab = grabkit('https://api.github.com', { format: 'json' });
 
 ## Server prefetch (optional)
 
-On the server, call `grabOrThrow` inside `queryClient.prefetchQuery`, then dehydrate state for the client. Grabkit runs in Node; see [Node.js](/guides/node/) for env and auth patterns.
+On the server, call `orThrow(grab(...))` inside `queryClient.prefetchQuery`, then dehydrate state for the client. Grabkit runs in Node; see [Node.js](/guides/node/) for env and auth patterns.
 
 ## Related
 

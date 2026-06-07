@@ -45,6 +45,8 @@ console.log(data, meta.statusCode);
 
 Ordinary HTTP and transport failures are **returned**, not thrown. The only synchronous throw is `GrabkitValidationError` (for example a JSON:API write body missing `type`).
 
+For data layers that expect thrown errors, use [`orThrow`](/guides/errors/#orthrow-throw-on-failure) to get **`[data, meta]`** instead of the three-slot tuple.
+
 ## Next steps
 
 - [JSON:API (default)](/guides/json-api/): denormalised reads and write envelopes

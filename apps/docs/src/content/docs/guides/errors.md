@@ -25,6 +25,28 @@ if (error) {
 // success
 ```
 
+## `orThrow` (throw on failure)
+
+When a library expects **thrown** errors (TanStack Query, SWR, and similar), wrap the grab promise with **`orThrow`** from the package. It returns **`[data, meta]`** on success and throws **`GrabkitError`** or **`GrabkitTransportError`** on failure.
+
+```typescript
+import grabkit, { orThrow } from 'grabkit';
+
+const grab = grabkit('https://api.example.com');
+
+const [data, meta] = await orThrow(grab('GET /users/1'));
+```
+
+When the cache layer only needs **`data`**, destructure the first slot:
+
+```typescript
+const [data] = await orThrow(grab<User>('GET /users/1'));
+```
+
+`GrabkitValidationError` is still thrown by the grab itself (before `fetch`), not by `orThrow`.
+
+See [TanStack Query](/guides/tanstack-query/) and [SWR](/guides/swr/) for full examples.
+
 ## GrabkitError (HTTP not OK)
 
 When the server responds but the status is outside 2xx, **`error`** is a **`GrabkitError`**:

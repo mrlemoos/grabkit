@@ -3,26 +3,19 @@ title: SWR
 description: Use Grabkit with SWR for client-side data fetching and mutations.
 ---
 
-Grabkit returns `[data, error, meta]`; SWR fetchers should **throw** on failure so `error` and `isValidating` behave as expected. Wrap grabs in a small helper or fetcher function.
+Grabkit returns `[data, error, meta]`; SWR fetchers should **throw** on failure so `error` and `isValidating` behave as expected. Use **`orThrow`** from the package in your fetcher.
 
 ## Shared API client
 
 ```typescript
 // api.ts
-import grabkit from 'grabkit';
+import grabkit, { orThrow } from 'grabkit';
 
 export const grab = grabkit(import.meta.env.VITE_API_URL, {
   casing: 'camelCase',
 });
 
-export async function grabOrThrow<Data>(
-  endpoint: string,
-  options?: Parameters<typeof grab>[1],
-): Promise<Data> {
-  const [data, error] = await grab(endpoint, options);
-  if (error) throw error;
-  return data as Data;
-}
+export { orThrow };
 ```
 
 ## Reads with `useSWR`
@@ -31,15 +24,15 @@ The **key** is any stable serialisable value; the **fetcher** receives that key 
 
 ```typescript
 import useSWR from 'swr';
-import { grabOrThrow } from './api';
+import { grab, orThrow } from './api';
 
 type User = { id: string; name: string };
 
 function useUser(id: string | null) {
-  return useSWR(
-    id ? ['user', id] : null,
-    ([, userId]) => grabOrThrow<User>(`GET /users/${userId}`),
-  );
+  return useSWR(id ? ['user', id] : null, async ([, userId]) => {
+    const [data] = await orThrow(grab<User>(`GET /users/${userId}`));
+    return data;
+  });
 }
 
 function Profile({ id }: { id: string }) {
@@ -61,13 +54,16 @@ If every request goes through the same grab callable, you can centralise the fet
 ```typescript
 // swr.ts
 import { SWRConfig } from 'swr';
-import { grabOrThrow } from './api';
+import { grab, orThrow } from './api';
 
 export function SWRProvider({ children }: { children: React.ReactNode }) {
   return (
     <SWRConfig
       value={{
-        fetcher: (endpoint: string) => grabOrThrow(endpoint),
+        fetcher: async (endpoint: string) => {
+          const [data] = await orThrow(grab(endpoint));
+          return data;
+        },
         revalidateOnFocus: false,
       }}
     >
@@ -91,13 +87,14 @@ Use this when the key **is** the endpoint string. For richer keys (arrays, objec
 
 ```typescript
 import useSWRMutation from 'swr/mutation';
-import { grabOrThrow } from './api';
+import { grab, orThrow } from './api';
 
 async function createUser(
   _key: string,
   { arg }: { arg: { type: 'users'; name: string } },
 ) {
-  return grabOrThrow(`POST /users`, { body: arg });
+  const [data] = await orThrow(grab(`POST /users`, { body: arg }));
+  return data;
 }
 
 function useCreateUser() {

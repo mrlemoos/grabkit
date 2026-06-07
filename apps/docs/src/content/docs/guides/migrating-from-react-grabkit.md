@@ -27,17 +27,20 @@ export const grab = grabkit(process.env.API_URL!, {
 });
 ```
 
-4. Call `grab` inside your existing query/mutation functions:
+4. Call `grab` inside your existing query/mutation functions. Use **`orThrow`** when the data layer expects thrown errors:
 
 ```typescript
+import grabkit, { orThrow } from 'grabkit';
+
+const grab = grabkit(process.env.API_URL!);
+
 async function fetchUser(id: string) {
-  const [data, error] = await grab(`GET /users/${id}`);
-  if (error) throw error;
+  const [data] = await orThrow(grab(`GET /users/${id}`));
   return data;
 }
 ```
 
-Whether you throw after a failed grab is up to your data layer; Grabkit itself returns errors in the tuple.
+Grabkit still returns errors in the tuple by default; `orThrow` is optional sugar for throw-based caches. See [Errors & results](/guides/errors/#orthrow-throw-on-failure).
 
 ## Data layer examples
 
