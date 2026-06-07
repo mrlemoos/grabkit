@@ -1,6 +1,6 @@
 {
   "name": "grabkit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeScript HTTP client for explicit METHOD /path calls. JSON:API by default.",
   "main": "build/cjs/grabkit.js",
   "types": "build/types/grabkit.d.ts",
@@ -9,7 +9,12 @@
   "author": "Leonardo Lemos <leo.lemos.ds@icloud.com>",
   "license": "Apache-2.0",
   "private": false,
-  "files": ["build", "README.md", "LICENSE", "CHANGELOG.md"],
+  "files": [
+    "build",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
   "scripts": {
     "prepack": "node ./scripts/prepack.mjs",
     "postpack": "node ./scripts/postpack.mjs"

@@ -1,3 +1,23 @@
+## 1.0.1 (2026-06-07)
+
+### 🚀 Features
+
+- **docs:** add grabkit.dev Starlight site and branding ([a3bb369](https://github.com/mrlemoos/grabkit/commit/a3bb369))
+- ⚠️  ship JSON:API-first 1.0 with [data, error, meta] tuple ([ef46a81](https://github.com/mrlemoos/grabkit/commit/ef46a81))
+
+### 🩹 Fixes
+
+- include README and LICENSE in npm publish bundle ([bb11ea2](https://github.com/mrlemoos/grabkit/commit/bb11ea2))
+
+### ⚠️  Breaking Changes
+
+- ship JSON:API-first 1.0 with [data, error, meta] tuple  ([ef46a81](https://github.com/mrlemoos/grabkit/commit/ef46a81))
+
+### ❤️ Thank You
+
+- Cursor @cursoragent
+- Leonardo Lemos @mrlemoos
+
 # Changelog
 
 ## 1.0.0 (2026-06-03)
