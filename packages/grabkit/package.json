@@ -9,5 +9,9 @@
   "author": "Leonardo Lemos <leo.lemos.ds@icloud.com>",
   "license": "Apache-2.0",
   "private": false,
-  "files": ["build"]
+  "files": ["build", "README.md", "LICENSE", "CHANGELOG.md"],
+  "scripts": {
+    "prepack": "node ./scripts/prepack.mjs",
+    "postpack": "node ./scripts/postpack.mjs"
+  }
 }
