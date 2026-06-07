@@ -1,6 +1,6 @@
 {
   "name": "grabkit",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "TypeScript HTTP client for explicit METHOD /path calls. JSON:API by default.",
   "main": "build/cjs/grabkit.js",
   "types": "build/types/grabkit.d.ts",

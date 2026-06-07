@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.1 (2026-06-07)
+
+### 🩹 Fixes
+
+- make prepack compatible with pnpm publish ([aa493d1](https://github.com/mrlemoos/grabkit/commit/aa493d1))
+- include README and LICENSE in npm publish bundle ([bb11ea2](https://github.com/mrlemoos/grabkit/commit/bb11ea2))
+
+### ❤️ Thank You
+
+- Cursor @cursoragent
+- Leonardo Lemos @mrlemoos
+
 ## 1.0.0 (2026-06-03)
 
 ### Features
