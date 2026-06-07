@@ -10,3 +10,5 @@ coverage
 .nx/cache
 .nx/workspace-data
 vitest.config.*.timestamp*
+packages/grabkit/README.md
+packages/grabkit/LICENSE
