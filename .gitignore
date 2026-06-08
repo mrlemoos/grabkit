@@ -1,4 +1,6 @@
 node_modules
+.pnpm-store
+.cursor/hooks
 build
 dist
 coverage
