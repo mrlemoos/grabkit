@@ -1,0 +1,103 @@
+---
+import '../styles/fonts.css';
+import '../styles/landing.css';
+import { SITE_URL, SITE_DESCRIPTION, globalSeoHead } from '../seo';
+---
+
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Grabkit — Make the request. Get on with it.</title>
+    <meta name="description" content={SITE_DESCRIPTION} />
+    <link rel="canonical" href={SITE_URL} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:title" content="Grabkit — Make the request. Get on with it." />
+    <meta property="og:description" content={SITE_DESCRIPTION} />
+    <meta property="og:url" content={SITE_URL} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    {globalSeoHead.map(({ tag: Tag, attrs, ...rest }) => <Tag {...attrs} set:html={'content' in rest ? rest.content : undefined} />)}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="nav">
+      <a class="wordmark" href="/" aria-label="Grabkit home"><span class="brand-icon" aria-hidden="true">g.</span>grabkit</a>
+      <nav aria-label="Main navigation"><a href="#why">Why Grabkit</a><a href="/guides/getting-started/">Documentation <span aria-hidden="true">↗</span></a><a class="github" href="https://github.com/mrlemoos/grabkit">GitHub <span aria-hidden="true">↗</span></a></nav>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="eyebrow"><span></span> A small library. A better way to grab.</div>
+        <h1 id="hero-title">Make the request.<br /><span>Get on with it.</span></h1>
+        <p class="hero-copy">The TypeScript HTTP library that gets straight to the point.<br class="desktop" /> One explicit request. Your data, error and meta, together.</p>
+        <div class="hero-actions"><a class="button" href="/guides/getting-started/">Start building <span aria-hidden="true">↗</span></a><button class="install" data-copy="pnpm add grabkit" aria-label="Copy install command"><span aria-hidden="true">$</span> pnpm add grabkit <span class="copy-symbol" aria-hidden="true">▣</span></button></div>
+        <p class="copy-status" role="status" id="copy-status"></p>
+        <div class="request-stage" role="group" aria-label="Interactive example of a Grabkit result">
+          <div class="stage-grid" aria-hidden="true"></div>
+          <div class="stage-caption"><span>THE REQUEST</span><span>EXPLICIT BY DESIGN</span></div>
+          <div class="request-capsule"><span class="method">GET</span><span class="endpoint">/users/you</span><span class="capsule-arrow" aria-hidden="true">↗</span></div>
+          <div class="connector" aria-hidden="true"></div>
+          <div class="tuple"><button class="tuple-part active" data-slot="data" aria-pressed="true"><span class="slot-label">01 / DATA</span><strong>Your next big thing.</strong><span class="slot-detail">The resource. Ready to use.</span></button><button class="tuple-part" data-slot="error" aria-pressed="false"><span class="slot-label">02 / ERROR</span><strong>null<span class="good-dot"></span></strong><span class="slot-detail">Failure has its own place.</span></button><button class="tuple-part" data-slot="meta" aria-pressed="false"><span class="slot-label">03 / META</span><strong>200 <span class="ok">OK</span></strong><span class="slot-detail">The context comes with it.</span></button></div>
+          <div class="result-readout" aria-live="polite"><code id="result-code">data = &#123; id: 'you', name: 'Your next big thing.' &#125;</code><span>ILLUSTRATIVE RESPONSE</span></div>
+        </div>
+        <div class="compatibility"><span>At home in your stack.</span><div>TypeScript <span>·</span> Browser <span>·</span> Node.js <span>·</span> ESM + CJS</div></div>
+      </section>
+
+      <section class="code-section" id="why" aria-labelledby="code-title">
+        <div class="section-copy"><p class="eyebrow">LESS CEREMONY. MORE SHIPPING.</p><h2 id="code-title">This is the<br />whole idea.</h2><p>Say what you want. Grabkit handles the HTTP request and returns a tuple. Check the error. Use the data. Keep going.</p><a class="text-link" href="/guides/errors/">Meet the result tuple <span aria-hidden="true">↗</span></a></div>
+        <div class="code-window"><div class="window-bar"><span><i></i><i></i><i></i></span><span>your-next-thing.ts</span><span>TS</span></div><pre><code><span class="syntax-purple">import</span> grabkit <span class="syntax-purple">from</span> <span class="syntax-blue">'grabkit'</span>;
+
+<span class="syntax-purple">const</span> grab = <span class="syntax-yellow">grabkit</span>(<span class="syntax-blue">'https://api.example.com'</span>, &#123;
+  format: <span class="syntax-blue">'json'</span>,
+&#125;);
+
+<span class="syntax-purple">const</span> [data, error, meta] = <span class="syntax-purple">await</span> <span class="syntax-yellow">grab</span>(
+  <span class="syntax-blue">'GET /users/you'</span>
+);
+
+<span class="syntax-purple">if</span> (error) <span class="syntax-purple">return</span>;
+
+<span class="syntax-comment">// Yours to build with.</span>
+console.<span class="syntax-yellow">log</span>(data, meta.statusCode);</code></pre><div class="code-foot"><span class="good-dot"></span> Plain JSON example <a href="/guides/plain-json/">Read the guide ↗</a></div></div>
+      </section>
+
+      <section class="features" aria-labelledby="features-title"><div class="features-heading"><p class="eyebrow">SMALL API. CONSIDERED DETAILS.</p><h2 id="features-title">Less to wire up.<br />More to work with.</h2></div><div class="feature-grid">
+        <a class="feature json-feature" href="/guides/json-api/"><div class="feature-art" aria-hidden="true"><span>&#123;<br />&nbsp; data: &#123; … &#125;,<br />&nbsp; included: [ … ]<br />&#125;</span><b>↓</b><span>&#123; id, name, friends &#125;</span></div><div><span class="feature-tag">JSON:API, BUILT IN</span><h3>The data you came for.</h3><p>Read resources with attributes and relationships already merged. Write flat objects. Grabkit builds the JSON:API envelope.</p><span class="feature-link">Explore JSON:API ↗</span></div></a>
+        <a class="feature" href="/guides/errors/"><div class="error-art" aria-hidden="true"><code>if (error)</code><span>handle it.</span><div class="error-line"></div><code>else</code><span>build with it.</span></div><div><span class="feature-tag">FAILURE, MADE EXPLICIT</span><h3>Errors belong in the result.</h3><p>HTTP and transport failures return in the tuple. One check tells you which way to go. Use orThrow when your data layer expects exceptions.</p><span class="feature-link">Understand errors ↗</span></div></a>
+        <a class="feature casing-feature" href="/guides/configuration/"><div class="casing-art" aria-hidden="true"><span>first_name</span><b>↘</b><span>firstName<span class="caret"></span></span></div><div><span class="feature-tag">YOUR CONVENTIONS</span><h3>Make yourself at home.</h3><p>Set key casing, headers and a base URL once. Override them per request. Use plain JSON when that's what your API speaks.</p><span class="feature-link">Configure your grab ↗</span></div></a>
+      </div></section>
+
+      <section class="integrations"><p class="eyebrow">BRING YOUR OWN DATA LAYER</p><h2>Fits the way you build.</h2><p>Keep your cache. Keep your framework.<br />Grabkit takes care of the request.</p><div class="integration-links"><a href="/guides/tanstack-query/">TanStack Query ↗</a><a href="/guides/swr/">SWR ↗</a><a href="/guides/node/">Node.js ↗</a></div></section>
+      <section class="final-cta"><span class="brand-icon" aria-hidden="true">g.</span><h2>Your next idea<br />starts with a grab.</h2><a class="button" href="/guides/getting-started/">Let's build it <span aria-hidden="true">↗</span></a><p>Open source. Apache 2.0. Yours to use.</p></section>
+    </main>
+    <footer><a class="wordmark" href="/">grabkit</a><p>Made by <a href="https://mrlemoos.dev">Leonardo Lemos</a></p><div><a href="https://www.npmjs.com/package/grabkit">npm ↗</a><a href="https://github.com/mrlemoos/grabkit">GitHub ↗</a><a href="/guides/getting-started/">Docs ↗</a></div></footer>
+    <script>
+      const readout = document.querySelector<HTMLElement>('#result-code');
+      const examples: Record<string, string> = {
+        data: "data = { id: 'you', name: 'Your next big thing.' }",
+        error: 'error = null // HTTP and transport failures appear here.',
+        meta: 'meta = { statusCode: 200 }',
+      };
+      document.querySelectorAll<HTMLButtonElement>('[data-slot]').forEach((button) => {
+        button.addEventListener('click', () => {
+          document.querySelectorAll('[data-slot]').forEach((slot) => {
+            const active = slot === button;
+            slot.classList.toggle('active', active);
+            slot.setAttribute('aria-pressed', String(active));
+          });
+          if (readout) readout.textContent = examples[button.dataset.slot!];
+        });
+      });
+      document.querySelector<HTMLButtonElement>('[data-copy]')?.addEventListener('click', async () => {
+        const status = document.querySelector<HTMLElement>('#copy-status');
+        try {
+          await navigator.clipboard.writeText('pnpm add grabkit');
+          if (status) status.textContent = 'Copied. Your terminal is next.';
+        } catch {
+          if (status) status.textContent = 'Copy this command: pnpm add grabkit';
+        }
+      });
+    </script>
+  </body>
+</html>

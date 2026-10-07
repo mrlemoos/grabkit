@@ -2,7 +2,7 @@
 :root {
   --sl-font: 'Geist Sans', system-ui, sans-serif;
   --sl-font-mono: 'Geist Mono', ui-monospace, monospace;
-  --gk-font-heading: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --gk-font-heading: 'Geist Sans', system-ui, sans-serif;
 }
 
 /* Dark theme (default) */
@@ -13,13 +13,13 @@
   --gk-border: #1e2832;
   --gk-text: #d4dce6;
   --gk-muted: #7a8a9a;
-  --gk-accent: #5ee4a8;
-  --gk-accent-dim: #2a9d6a;
-  --gk-amber: #e8b86d;
-  --gk-glow: rgba(94, 228, 168, 0.14);
-  --gk-scanline: rgba(94, 228, 168, 0.02);
-  --gk-scanline-alt: rgba(94, 228, 168, 0.015);
-  --gk-code-inset: rgba(94, 228, 168, 0.04);
+  --gk-accent: #91adff;
+  --gk-accent-dim: #5477ec;
+  --gk-amber: #a2b8ff;
+  --gk-glow: rgba(145, 173, 255, 0.14);
+  --gk-scanline: rgba(145, 173, 255, 0.02);
+  --gk-scanline-alt: rgba(145, 173, 255, 0.015);
+  --gk-code-inset: rgba(145, 173, 255, 0.04);
 
   --sl-color-white: var(--gk-text);
   --sl-color-gray-1: #c2ccd8;
@@ -30,7 +30,7 @@
   --sl-color-gray-6: #141a22;
   --sl-color-black: var(--gk-bg);
 
-  --sl-color-accent-low: #0f2419;
+  --sl-color-accent-low: #152448;
   --sl-color-accent: var(--gk-accent-dim);
   --sl-color-accent-high: var(--gk-accent);
 
@@ -46,24 +46,24 @@
   --sl-color-hairline-shade: #0a0e13;
   --sl-color-backdrop-overlay: rgba(8, 10, 13, 0.72);
 
-  --sl-shadow-sm: 0 1px 0 rgba(94, 228, 168, 0.06);
+  --sl-shadow-sm: 0 1px 0 rgba(145, 173, 255, 0.06);
   --sl-shadow-md: 0 8px 32px rgba(0, 0, 0, 0.45);
 }
 
 /* Light theme */
 [data-theme='light'] {
-  --gk-bg: #f4f6f9;
+  --gk-bg: #f7f8fa;
   --gk-surface: #ffffff;
   --gk-border: #d4dde8;
   --gk-text: #121820;
   --gk-muted: #5a6a7a;
-  --gk-accent: #1a8f5c;
-  --gk-accent-dim: #2a9d6a;
-  --gk-amber: #b8862a;
-  --gk-glow: rgba(26, 143, 92, 0.12);
-  --gk-scanline: rgba(26, 143, 92, 0.04);
-  --gk-scanline-alt: rgba(26, 143, 92, 0.03);
-  --gk-code-inset: rgba(26, 143, 92, 0.06);
+  --gk-accent: #3159ed;
+  --gk-accent-dim: #5477ec;
+  --gk-amber: #3159ed;
+  --gk-glow: rgba(49, 89, 237, 0.12);
+  --gk-scanline: rgba(49, 89, 237, 0.04);
+  --gk-scanline-alt: rgba(49, 89, 237, 0.03);
+  --gk-code-inset: rgba(49, 89, 237, 0.06);
 
   --sl-color-white: var(--gk-text);
   --sl-color-gray-1: #2a3544;
@@ -74,7 +74,7 @@
   --sl-color-gray-6: #e8edf3;
   --sl-color-black: var(--gk-bg);
 
-  --sl-color-accent-low: #e6f5ed;
+  --sl-color-accent-low: #e8edff;
   --sl-color-accent: var(--gk-accent-dim);
   --sl-color-accent-high: var(--gk-accent);
 
@@ -101,10 +101,6 @@
 
 .page {
   background-color: var(--sl-color-bg);
-  background-image:
-    linear-gradient(var(--gk-scanline) 1px, transparent 1px),
-    linear-gradient(90deg, var(--gk-scanline-alt) 1px, transparent 1px);
-  background-size: 48px 48px;
 }
 
 header.header {
@@ -138,7 +134,7 @@ header.header {
 .sl-sidebar-group-label,
 .card .title {
   font-family: var(--gk-font-heading);
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: -0.02em;
 }
 
@@ -155,7 +151,7 @@ header.header {
 .hero h1 {
   font-family: var(--gk-font-heading);
   font-size: clamp(2.25rem, 5vw, 3.25rem);
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: -0.03em;
 }
 
@@ -213,7 +209,7 @@ th {
 
 .site-title {
   font-family: var(--gk-font-heading);
-  font-weight: 400;
+  font-weight: 500;
   letter-spacing: -0.02em;
 }
 
