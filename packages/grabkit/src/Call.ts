@@ -79,6 +79,10 @@ class Call {
       const text = await response.text();
 
       if (text.length === 0) {
+        // An empty 2xx (e.g. `202 Accepted` with no body) is success, like 204.
+        if (response.ok) {
+          return { ok: true, status: response.status, parsed: null, empty: true };
+        }
         return {
           ok: false,
           error: new GrabkitTransportError('Grabkit: empty response body'),
