@@ -4,7 +4,15 @@
   "description": "TypeScript HTTP client for explicit METHOD /path calls. JSON:API by default.",
   "main": "build/cjs/grabkit.js",
   "types": "build/types/grabkit.d.ts",
-  "module": "build/esm/grabkit.js",
+  "module": "build/esm/grabkit.mjs",
+  "exports": {
+    ".": {
+      "types": "./build/types/grabkit.d.ts",
+      "import": "./build/esm/grabkit.mjs",
+      "require": "./build/cjs/grabkit.js"
+    },
+    "./package.json": "./package.json"
+  },
   "repository": "https://github.com/mrlemoos/grabkit",
   "author": "Leonardo Lemos <leo.lemos.ds@icloud.com>",
   "license": "Apache-2.0",

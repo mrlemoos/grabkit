@@ -10,7 +10,7 @@ const require = createRequire(import.meta.url);
 const tslibPath = require.resolve('tslib');
 
 const projectRoot = 'packages/grabkit';
-const ESM_FILENAME = `${projectRoot}/build/esm/grabkit.js`;
+const ESM_FILENAME = `${projectRoot}/build/esm/grabkit.mjs`;
 const CJS_FILENAME = `${projectRoot}/build/cjs/grabkit.js`;
 const TYPES_FILENAME = `${projectRoot}/build/types/grabkit.d.ts`;
 

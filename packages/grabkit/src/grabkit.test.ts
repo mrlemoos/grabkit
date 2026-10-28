@@ -90,6 +90,27 @@ describe('grabkit', () => {
     expect(meta).toEqual({ statusCode: 204 });
   });
 
+  it.each([200, 201, 202])('treats an empty %i body as success with null data', async (status) => {
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(null, { status })));
+    const grab = grabkit('https://api.example.com', { format: 'json' });
+
+    const [data, error, meta] = await grab('POST /events', { body: { name: 'signup' } });
+
+    expect(error).toBeNull();
+    expect(data).toBeNull();
+    expect(meta).toEqual({ statusCode: status });
+  });
+
+  it('still reports an empty non-2xx body as a failure', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => new Response(null, { status: 500 })));
+    const grab = grabkit('https://api.example.com', { format: 'json' });
+
+    const [data, error] = await grab('POST /events', { body: { name: 'signup' } });
+
+    expect(data).toBeNull();
+    expect(error).not.toBeNull();
+  });
+
   it('serialises JSON:API write bodies and sets media type headers by default', async () => {
     const fetchMock = vi.fn(async () => new Response(null, { status: 204 }));
     vi.stubGlobal('fetch', fetchMock);

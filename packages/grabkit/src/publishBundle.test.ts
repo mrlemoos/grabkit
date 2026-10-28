@@ -35,4 +35,16 @@ describe('publish bundle', () => {
   it('includes LICENSE in the npm tarball', () => {
     expect(listPackFiles()).toContain('LICENSE');
   });
+
+  it.each([
+    { runtime: 'Node ESM', args: ['--input-type=module', '-e', "const m = await import('grabkit'); console.log(typeof m.default)"] },
+    { runtime: 'Node CJS', args: ['-e', "console.log(typeof require('grabkit').default)"] },
+  ])('exposes a callable default export to $runtime consumers', ({ args }) => {
+    // Self-reference by package name resolves through `exports`, like a real install.
+    const { stdout, stderr, status } = spawnSync(process.execPath, args, { cwd: packageRoot, encoding: 'utf8' });
+
+    expect(stderr).toBe('');
+    expect(status).toBe(0);
+    expect(stdout.trim()).toBe('function');
+  });
 });
